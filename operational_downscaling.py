@@ -734,7 +734,7 @@ if __name__ == '__main__':
     max_frame = int(max_frame/6)
     #set the new colormap
     newcmp = create_colormap()
-    #time_series_plots()
+    time_series_plots()
 
     print('starting multiprocessing')
 
@@ -743,7 +743,7 @@ if __name__ == '__main__':
     p.map(plot_data, range(max_frame+1))
     newend = time.time()
 
-    #github_push()
+    github_push()
 
     end = time.time()
     print(end-start)
