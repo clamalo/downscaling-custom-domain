@@ -161,15 +161,15 @@ def trim_ratio(max_mins,resolution,domain):
 
 
     if domain != 'japan':
-        current_month_ds = xr.load_dataset('/Users/shedprinter/desktop/us_chelsa_0.'+resolution+'_'+str(currentMonth)+'_area.nc')
+        current_month_ds = xr.load_dataset('/Users/shedprinter/desktop/downscale_files/p'+resolution+'/us_chelsa_0.'+resolution+'_'+str(currentMonth)+'_area.nc')
         current_month_ds.coords['lon'] = current_month_ds.lon + 360
         current_month_ds = current_month_ds.swap_dims({'lon': 'lon'})
-        other_month_ds = xr.load_dataset('/Users/shedprinter/desktop/us_chelsa_0.'+resolution+'_'+str(other_month)+'_area.nc')
+        other_month_ds = xr.load_dataset('/Users/shedprinter/desktop/downscale_files/p'+resolution+'/us_chelsa_0.'+resolution+'_'+str(other_month)+'_area.nc')
         other_month_ds.coords['lon'] = other_month_ds.lon + 360
         other_month_ds = other_month_ds.swap_dims({'lon': 'lon'})
     else:
-        current_month_ds = xr.load_dataset('/Users/shedprinter/desktop/jp_chelsa_0.'+resolution+'_'+str(currentMonth)+'_area.nc')
-        other_month_ds = xr.load_dataset('/Users/shedprinter/desktop/jp_chelsa_0.'+resolution+'_'+str(other_month)+'_area.nc')
+        current_month_ds = xr.load_dataset('/Users/shedprinter/desktop/downscale_files/p'+resolution+'/jp_chelsa_0.'+resolution+'_'+str(currentMonth)+'_area.nc')
+        other_month_ds = xr.load_dataset('/Users/shedprinter/desktop/downscale_files/p'+resolution+'/jp_chelsa_0.'+resolution+'_'+str(other_month)+'_area.nc')
 
     ds = current_month_ds
     ds['latitude'] = ds['lat']
@@ -244,8 +244,8 @@ def blend_models(frame,domain):
     ecmwf_ds = (xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+frame+'ecmwf.grib',engine='cfgrib'))
 
     #rename glitchy parameter name
-    ecmwf_ds['tp'] = ecmwf_ds['paramId_0']
-    ecmwf_ds = ecmwf_ds.drop(['paramId_0'])
+    ecmwf_ds['tp'] = ecmwf_ds['unknown']
+    ecmwf_ds = ecmwf_ds.drop(['unknown'])
 
     #get 6-hourly precip in inches
     ecmwf_ds['tp'] = ((ecmwf_ds.tp[1]*39.370079003585)-(ecmwf_ds.tp[0]*39.370079003585))
@@ -262,16 +262,16 @@ def blend_models(frame,domain):
 
     if int(frame) > 6:
         gem_ds = xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+str(frame)+'gem.grib2', engine='cfgrib')
-        gem_ds['tp'] = gem_ds['paramId_0']
+        gem_ds['tp'] = gem_ds['unknown']
 
         previous_gem_ds = xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+name_frame(int(frame)-6)+'gem.grib2', engine='cfgrib')
-        previous_gem_ds['tp'] = previous_gem_ds['paramId_0']
+        previous_gem_ds['tp'] = previous_gem_ds['unknown']
 
-        gem_ds['tp'] = (gem_ds['paramId_0']-previous_gem_ds['paramId_0'])*0.039370079003585
+        gem_ds['tp'] = (gem_ds['unknown']-previous_gem_ds['unknown'])*0.039370079003585
     else:
         gem_ds = xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+str(frame)+'gem.grib2', engine='cfgrib')
-        gem_ds['tp'] = gem_ds['paramId_0']*0.039370079003585
-        gem_ds = gem_ds.drop(['paramId_0'])
+        gem_ds['tp'] = gem_ds['unknown']*0.039370079003585
+        gem_ds = gem_ds.drop(['unknown'])
 
     longitude_list = []
 
