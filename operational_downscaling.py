@@ -539,7 +539,6 @@ def plot_data(i):
                 point_lons = []
 
                 for point in points:
-                    print(point)
                     point_domain = str(point.split(',')[3])
                     if point_domain == domain:
                         lat = float(point.split(',')[1])
