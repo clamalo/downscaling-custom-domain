@@ -205,7 +205,7 @@ def ingest_gribs(i):
     frame = name_frame(i)
     datestr = datestr_and_cycle()[0]
     cycle = datestr_and_cycle()[1]
-    gfs_url = 'https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t'+cycle+'z.pgrb2.0p25.f'+str(frame)+'&lev_surface=on&var_APCP=on&leftlon=0&rightlon=360&toplat=90&bottomlat=-90&dir=%2Fgfs.'+datestr+'%2F'+cycle+'%2Fatmos'
+    gfs_url = 'https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t'+cycle+'z.pgrb2.0p25.f'+str(frame)+'&lev_500_mb=on&lev_550_mb=on&lev_600_mb=on&lev_650_mb=on&lev_700_mb=on&lev_750_mb=on&lev_800_mb=on&lev_850_mb=on&lev_900_mb=on&lev_950_mb=on&lev_surface=on&var_APCP=on&var_HGT=on&var_TMP=on&leftlon=0&rightlon=360&toplat=90&bottomlat=-90&dir=%2Fgfs.'+datestr+'%2F'+cycle+'%2Fatmos'
     r = requests.get(gfs_url, allow_redirects=True)
     open('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+str(frame)+'gfs.grib2', 'wb').write(r.content)
 
