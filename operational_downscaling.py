@@ -238,7 +238,7 @@ def ingest_gribs(i):
 
 def blend_models(frame,domain):
     #load raw gribs
-    gfs_ds = (xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+frame+'gfs.grib2'))
+    gfs_ds = xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+frame+'gfs.grib2',engine='cfgrib',filter_by_keys={'typeOfLevel': 'surface'})
     gfs_ds['tp'] = gfs_ds['tp']*0.039370079003585
 
     ecmwf_ds = (xr.load_dataset('/Users/shedprinter/desktop/blend_outputs/raw_gribs/'+frame+'ecmwf.grib',engine='cfgrib'))
